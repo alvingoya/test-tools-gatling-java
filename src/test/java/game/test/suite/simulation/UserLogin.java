@@ -10,15 +10,18 @@ import io.gatling.javaapi.http.*;
 //should be public
 public class UserLogin extends Simulation {
 
-    ChainBuilder login = exec(
-            http("Login")
-                    .post(PLATFORM_APP + "/login")
-                    .asJson()
-                    .headers(STATIC_HEADERS)
-                    .header("dev", "2")
-                    .body(RawFileBody("params/loginBody.json"))
-                    .check(status().is(200))
-    );
+    ChainBuilder login =
+            tryMax(2).on(
+                    exec(
+                            http("Login")
+                                    .post(PLATFORM_APP + "/login")
+                                    .asJson()
+                                    .headers(STATIC_HEADERS)
+                                    .header("dev", "2")
+                                    .body(RawFileBody("params/loginBody.json"))
+                                    .check(status().is(200))
+                    ).exitHereIfFailed()
+            );
 
     ScenarioBuilder loginScn = scenario("loginScn").exec(login);
 
