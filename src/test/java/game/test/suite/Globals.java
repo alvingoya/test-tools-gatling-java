@@ -10,7 +10,6 @@ public final class Globals {
     public static final String BASE_URL = "https://game99.feiwindevelopment.com";
     public static final String PLATFORM_APP = "/game99-platform-app";
     public static final Map<String, String> STATIC_HEADERS = Map.of(
-            "dev", "2",
             "version", "1.0",
             "frond-host", "http://localhost.com");
     public static final HttpProtocolBuilder DEFAULT_PROTOCOL = http.baseUrl(BASE_URL)

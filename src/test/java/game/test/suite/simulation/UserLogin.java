@@ -15,6 +15,7 @@ public class UserLogin extends Simulation {
                     .post(PLATFORM_APP + "/login")
                     .asJson()
                     .headers(STATIC_HEADERS)
+                    .header("dev", "2")
                     .body(RawFileBody("params/loginBody.json"))
                     .check(status().is(200))
     );
