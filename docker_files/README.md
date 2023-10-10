@@ -1,6 +1,7 @@
-# Base Docker Image
-
-# Usage
+# Gatling Docker
+- Execute test on container
+- Single use, run and dispose
+## Usage
 
 Use image to run container
 

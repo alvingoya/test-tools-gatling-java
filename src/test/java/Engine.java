@@ -1,5 +1,3 @@
-package game.test.suite;
-
 import io.gatling.app.Gatling;
 import io.gatling.core.config.GatlingPropertiesBuilder;
 

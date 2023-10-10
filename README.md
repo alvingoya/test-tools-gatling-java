@@ -8,5 +8,6 @@ mvn gatling:verify
 ```
 #### Run Test:
 ```shell
-mvn gatling:test
+mvn gatling:test -Dgatling.simulationClass=game.test.suite.simulation.game99.platform.app.Interest
 ```
+or run Engine.java

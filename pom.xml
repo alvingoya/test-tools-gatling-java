@@ -55,6 +55,15 @@
         <configuration>
           <!-- Enterprise Cloud (https://cloud.gatling.io/) configuration reference: https://gatling.io/docs/gatling/reference/current/extensions/maven_plugin/#working-with-gatling-enterprise-cloud -->
           <!-- Enterprise Self-Hosted configuration reference: https://gatling.io/docs/gatling/reference/current/extensions/maven_plugin/#working-with-gatling-enterprise-self-hosted -->
+
+          <!-- Enable to run all, but it's better to test per controller -->
+<!--          <runMultipleSimulations>true</runMultipleSimulations>-->
+<!--          <includes>-->
+<!--            <include>game.test.suite.simulation.game99</include>-->
+<!--          </includes>-->
+<!--          <excludes>-->
+<!--            <exclude>my.package.IgnoredSimulation</exclude>-->
+<!--          </excludes>-->
         </configuration>
       </plugin>
     </plugins>

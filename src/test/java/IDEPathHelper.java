@@ -1,5 +1,3 @@
-package game.test.suite;
-
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
