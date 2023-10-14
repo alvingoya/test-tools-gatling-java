@@ -45,10 +45,8 @@ public abstract class AbstractSimulation extends Simulation {
 
     {
         if(useLogin()) {
-            System.out.println("using login....");
             setUp(loginScn.injectOpen(atOnceUsers(1)).andThen(builders())).protocols(getProtocol());
         } else {
-            System.out.println("not using login....");
             setUp(builders()).protocols(getProtocol());
         }
     }
