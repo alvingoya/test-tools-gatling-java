@@ -13,7 +13,7 @@ import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public abstract class LoginSimulation extends Simulation {
+public abstract class AbstractSimulation extends Simulation {
 
     protected static String TOKEN;
 
@@ -39,9 +39,17 @@ public abstract class LoginSimulation extends Simulation {
         return DEFAULT_PROTOCOL;
     }
 
+    protected boolean useLogin() {
+        return true;
+    }
+
     {
-        setUp(
-                loginScn.injectOpen(atOnceUsers(1)).andThen(builders())
-        ).protocols(getProtocol());
+        if(useLogin()) {
+            System.out.println("using login....");
+            setUp(loginScn.injectOpen(atOnceUsers(1)).andThen(builders())).protocols(getProtocol());
+        } else {
+            System.out.println("not using login....");
+            setUp(builders()).protocols(getProtocol());
+        }
     }
 }
