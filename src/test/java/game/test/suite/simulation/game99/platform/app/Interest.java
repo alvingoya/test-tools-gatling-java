@@ -4,6 +4,7 @@ import game.test.suite.AbstractSimulation;
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.PopulationBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
+import jodd.net.HttpMethod;
 
 import java.time.Duration;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Interest extends AbstractSimulation {
     private ScenarioBuilder incomeDetails() {
         String uri = "/incomeDetails";
         ChainBuilder builder = exec(session -> {
-            getDefaultRequest(uri, INTEREST_URL + uri)
+            getDefaultRequest(HttpMethod.POST, "asdfasdf", INTEREST_URL + uri)
                     .header("token", TOKEN)
                     .body(RawFileBody(PARAMS_DIR + "/incomeDetails.json"))
                     .check(status().is(200));
@@ -33,7 +34,7 @@ public class Interest extends AbstractSimulation {
     private ScenarioBuilder summary() {
         String uri = "/summary";
         ChainBuilder builder = exec(session -> {
-            getDefaultRequest(uri, INTEREST_URL + uri)
+            getDefaultRequest( HttpMethod.POST, uri, INTEREST_URL + uri)
                     .header("token", TOKEN)
                     .body(RawFileBody(PARAMS_DIR + "/summary.json"))
                     .check(status().is(200));
@@ -45,7 +46,7 @@ public class Interest extends AbstractSimulation {
     private ScenarioBuilder getRules() {
         String uri = "/getRules";
         ChainBuilder builder = exec(session -> {
-            getDefaultRequest(uri, INTEREST_URL + uri)
+            getDefaultRequest(HttpMethod.GET, uri, INTEREST_URL + uri)
                     .header("token", TOKEN)
                     .check(status().is(200));
             return session;

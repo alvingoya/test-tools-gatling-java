@@ -4,6 +4,7 @@ import game.test.suite.AbstractSimulation;
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.PopulationBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
+import jodd.net.HttpMethod;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class MemberRecommend extends AbstractSimulation {
     private ScenarioBuilder getAllData() {
         String uri = "/getAllData";
         ChainBuilder builder = exec(session -> {
-            getDefaultRequest(uri, PLATFORM_APP + uri)
+            getDefaultRequest(HttpMethod.POST, uri, PLATFORM_APP + uri)
                     .header("token", TOKEN)
                     .body(RawFileBody(PARAMS_DIR + "/incomeDetails.json"))
                     .check(status().is(200));

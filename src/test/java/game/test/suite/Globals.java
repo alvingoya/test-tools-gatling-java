@@ -2,6 +2,7 @@ package game.test.suite;
 
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
+import jodd.net.HttpMethod;
 
 import java.util.Map;
 
@@ -20,10 +21,15 @@ public final class Globals {
             .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) " +
                     "Chrome/117.0.0.0 Safari/537.36");
 
-    public static HttpRequestActionBuilder getDefaultRequest(String name, String url) {
-        return http(name)
-                .post(url)
-                .asJson()
-                .headers(STATIC_HEADERS);
+    public static HttpRequestActionBuilder getDefaultRequest(HttpMethod method, String name, String url) {
+        HttpRequestActionBuilder httpBuilder = switch (method) {
+            case GET -> http(name).get(url);
+            case POST -> http(name).post(url);
+            case PUT -> http(name).put(url);
+            case DELETE -> http(name).delete(url);
+            default -> throw new IllegalStateException("Unexpected value: " + method);
+        };
+
+        return httpBuilder.asJson().headers(STATIC_HEADERS);
     }
 }
