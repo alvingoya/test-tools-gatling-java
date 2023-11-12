@@ -8,9 +8,9 @@ import jodd.net.HttpMethod;
 
 import java.util.List;
 
-import static game.test.suite.Globals.*;
+import static game.test.suite.Globals.PLATFORM_APP;
+import static game.test.suite.Globals.getDefaultRequest;
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class Report extends AbstractSimulation {
     private static final String PARAMS_DIR = "params/game99/platform/app/report";
@@ -19,9 +19,10 @@ public class Report extends AbstractSimulation {
         String uri = "/account/list";
         ChainBuilder builder = exec(
                 getDefaultRequest(HttpMethod.POST, uri, resolveUri(uri))
-                .header("token", getTokenName())
-                .body(RawFileBody(PARAMS_DIR + "/list.json"))
-                .check(status().is(200))
+                        .header("token", getTokenName())
+                        .body(RawFileBody(PARAMS_DIR + "/list.json"))
+                        .check(jsonPath("$.code").ofInt().is(200))
+                        .check(jsonPath("$.total").ofInt().gt(0))
         );
         return createScenario(uri, builder);
     }

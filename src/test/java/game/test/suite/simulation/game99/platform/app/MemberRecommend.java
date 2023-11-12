@@ -11,7 +11,6 @@ import java.util.List;
 import static game.test.suite.Globals.PLATFORM_APP;
 import static game.test.suite.Globals.getDefaultRequest;
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class MemberRecommend extends AbstractSimulation {
 
@@ -23,7 +22,7 @@ public class MemberRecommend extends AbstractSimulation {
                 getDefaultRequest(HttpMethod.POST, uri, resolveUri(uri))
                         .header("token", getTokenName())
                         .body(RawFileBody(PARAMS_DIR + "/getAllData.json"))
-                        .check(status().is(200))
+                        .check(jsonPath("$.code").ofInt().is(200))
         );
         return createScenario(uri, builder);
     }

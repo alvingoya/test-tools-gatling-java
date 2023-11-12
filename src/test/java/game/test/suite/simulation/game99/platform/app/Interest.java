@@ -9,9 +9,9 @@ import jodd.net.HttpMethod;
 import java.time.Duration;
 import java.util.List;
 
-import static game.test.suite.Globals.*;
+import static game.test.suite.Globals.GAME_APP;
+import static game.test.suite.Globals.getDefaultRequest;
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class Interest extends AbstractSimulation {
 
@@ -23,7 +23,7 @@ public class Interest extends AbstractSimulation {
                 getDefaultRequest(HttpMethod.POST, uri, resolveUri(uri))
                         .header("token", getTokenName())
                         .body(RawFileBody(PARAMS_DIR + "/incomeDetails.json"))
-                        .check(status().is(200))
+                        .check(jsonPath("$.code").ofInt().is(200))
         );
         return createScenario(uri, builder);
     }
@@ -34,7 +34,7 @@ public class Interest extends AbstractSimulation {
                 getDefaultRequest(HttpMethod.POST, uri, resolveUri(uri))
                         .header("token", getTokenName())
                         .body(RawFileBody(PARAMS_DIR + "/summary.json"))
-                        .check(status().is(200))
+                        .check(jsonPath("$.code").ofInt().is(200))
         );
         return createScenario(uri, builder);
     }
@@ -44,7 +44,7 @@ public class Interest extends AbstractSimulation {
         ChainBuilder builder = exec(
                 getDefaultRequest(HttpMethod.GET, uri, resolveUri(uri))
                         .header("token", getTokenName())
-                        .check(status().is(200))
+                        .check(jsonPath("$.code").ofInt().is(200))
         );
         return createScenario(uri, builder);
     }
