@@ -10,12 +10,12 @@ import static io.gatling.javaapi.http.HttpDsl.http;
 
 public final class Globals {
 
-    public static final String BASE_URL = "http://localhost";
-    public static final String PLATFORM_APP = ":18811";
-    public static final String GAME_APP = ":18813";
-//    public static final String BASE_URL = "https://game99.feiwindevelopment.com";
-//    public static final String PLATFORM_APP = "/game99-platform-app";
-//    public static final String GAME_APP = "/game99-game-app";
+//    public static final String BASE_URL = "http://localhost";
+//    public static final String PLATFORM_APP = ":18811";
+//    public static final String GAME_APP = ":18813";
+    public static final String BASE_URL = "https://game99.feiwindevelopment.com";
+    public static final String PLATFORM_APP = "/game99-platform-app";
+    public static final String GAME_APP = "/game99-game-app";
     public static final Map<String, String> STATIC_HEADERS = Map.of(
             "version", "1.0",
             "dev", "2",

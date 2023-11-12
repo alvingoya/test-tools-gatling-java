@@ -1,4 +1,4 @@
-package game.test.suite.simulation.game99.platform.app;
+package game.test.suite.simulation.game99.game.app;
 
 import game.test.suite.AbstractSimulation;
 import io.gatling.javaapi.core.ChainBuilder;
