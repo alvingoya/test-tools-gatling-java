@@ -16,6 +16,7 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 public abstract class AbstractSimulation extends Simulation {
 
     protected static String TOKEN;
+    private static final String TOKEN_NAME = "tokenString";
 
     private static final ChainBuilder LOGIN_EXEC =
             exec(http("Login")
@@ -34,6 +35,7 @@ public abstract class AbstractSimulation extends Simulation {
     ScenarioBuilder loginScn = scenario("/login").exec(LOGIN_EXEC);
 
     protected abstract List<PopulationBuilder> builders();
+    protected abstract String baseUri();
 
     protected HttpProtocolBuilder getProtocol() {
         return DEFAULT_PROTOCOL;
@@ -43,11 +45,25 @@ public abstract class AbstractSimulation extends Simulation {
         return true;
     }
 
+    public String resolveUri(String uri) {
+        return baseUri() + uri;
+    }
+
+    public ScenarioBuilder createScenario(String name, ChainBuilder builder) {
+        return useLogin() ? scenario(name).exec(session -> session.set(TOKEN_NAME, TOKEN)).exec(builder)
+                : scenario(name).exec(builder);
+    }
+
+    public String getTokenName() {
+        return "#{" + TOKEN_NAME + "}";
+    }
+
     {
         if(useLogin()) {
-            setUp(loginScn.injectOpen(atOnceUsers(1)).andThen(builders())).protocols(getProtocol());
+            setUp(loginScn.injectOpen(atOnceUsers(1)).andThen(builders().toArray(PopulationBuilder[]::new)))
+                    .protocols(getProtocol());
         } else {
-            setUp(builders()).protocols(getProtocol());
+            setUp(builders().toArray(PopulationBuilder[]::new)).protocols(getProtocol());
         }
     }
 }

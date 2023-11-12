@@ -8,22 +8,20 @@ import jodd.net.HttpMethod;
 
 import java.util.List;
 
-import static game.test.suite.Globals.PLATFORM_APP;
-import static game.test.suite.Globals.getDefaultRequest;
+import static game.test.suite.Globals.*;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class MemberRecommend extends AbstractSimulation {
+public class Report extends AbstractSimulation {
+    private static final String PARAMS_DIR = "params/game99/platform/app/report";
 
-    private static final String PARAMS_DIR = "params/game99/platform/app/member-recommend";
-
-    private ScenarioBuilder getAllData() {
-        String uri = "/getAllData";
+    private ScenarioBuilder accountList() {
+        String uri = "/account/list";
         ChainBuilder builder = exec(
                 getDefaultRequest(HttpMethod.POST, uri, resolveUri(uri))
-                        .header("token", getTokenName())
-                        .body(RawFileBody(PARAMS_DIR + "/getAllData.json"))
-                        .check(status().is(200))
+                .header("token", getTokenName())
+                .body(RawFileBody(PARAMS_DIR + "/list.json"))
+                .check(status().is(200))
         );
         return createScenario(uri, builder);
     }
@@ -31,7 +29,7 @@ public class MemberRecommend extends AbstractSimulation {
     @Override
     protected List<PopulationBuilder> builders() {
         return List.of(
-                getAllData().injectOpen(atOnceUsers(20))
+                accountList().injectOpen(atOnceUsers(20))
         );
     }
 
@@ -39,4 +37,5 @@ public class MemberRecommend extends AbstractSimulation {
     protected String baseUri() {
         return PLATFORM_APP;
     }
+
 }
